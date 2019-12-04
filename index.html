@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Moment.js Cheat Sheet</title>
+    <style>
+      * {
+        /* border: solid 1px; */
+        font-family: '微軟正黑體';
+        color: #000;
+        font-size: 16px;
+        line-height: 2.4;
+        letter-spacing: 0.8px;
+        text-decoration: none;
+        position: relative;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        padding: 40px 0;
+        background-color: #eee;
+      }
+
+      header {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 34px;
+        display: inline-block;
+        border-bottom: 5px solid rgba(170, 238, 170, 0.76);
+      }
+
+      .inputWrap {
+        width: 600px;
+        margin: 30px auto;
+        padding: 20px;
+        border: solid 2px rgba(170, 238, 170, 0.76);
+        border-radius: 5px;
+        box-shadow: 0 0 10px #ddd;
+      }
+
+      .inputWrap #input {
+        width: 70%;
+        padding: 0px 5px;
+        border: solid 1px #999;
+        border-radius: 5px;
+        background-color: #eee;
+      }
+
+      .inputWrap .title {
+        display: inline-block;
+        width: 120px;
+        margin-right: 10px;
+        text-align: right;
+      }
+
+      .examples {
+        display: flex;
+        justify-content: center;
+        align-items: top;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+
+      .wrap {
+        width: 600px;
+        margin: 20px 30px;
+      }
+
+      .wrap h3 {
+        margin: 24px 0 12px;
+        border-left: solid 7px #ee0;
+        padding-left: 15px;
+        font-size: 22px;
+      }
+
+      .wrap li {
+        border-radius: 5px;
+        padding-left: 10px;
+        background-color: rgba(170, 238, 170, 0.76);
+        /* list-style: none; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <a
+          href="https://momentjs.com/"
+          target="_blank"
+          title="Click to the Moment.js website"
+        >
+          <h1>Moment.js Cheat Sheet</h1>
+        </a>
+      </header>
+
+      <!-- <div class="inputWrap">
+        <label for="" class="title">Try yourself：</label>
+        <input type="text" id="input" onkeyup="getValue(event)" />
+        <p>
+          <span class="title">Your input：</span>
+          <span id="tryText"></span>
+        </p>
+        <p>
+          <span class="title">Input result：</span>
+          <span id="tryResult"></span>
+        </p>
+      </div> -->
+
+      <!-- <hr /> -->
+
+      <div class="examples">
+        <div class="wrap">
+          <h3>Now</h3>
+          <ul>
+            <li id="now">moment();</li>
+            <li id="nowF">moment().format();</li>
+            <li id="nowF1">moment().format("YYYY/MM/DD HH:mm:ss dddd");</li>
+            <li id="nowF2">moment().format("MMMM Do YYYY, h:mm:ss a");</li>
+            <li id="nowF3">
+              moment().format("[今天是] YYYY [年中的第] DDD [天]");
+            </li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>String</h3>
+          <ul>
+            <li id="str">moment("12/25/1995", "MM-DD-YYYY");</li>
+            <li id="strF">moment("12/25/1995", "MM-DD-YYYY").format();</li>
+            <li id="strF2">
+              moment("12/25/1995", "MM-DD-YYYY").format("YY Mo DD ddd");
+            </li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Unix Timestamp</h3>
+          <ul>
+            <li id="stamp">moment(1565445319797);</li>
+            <li id="stampF">moment(1565445319797).format();</li>
+            <li id="stampF2">
+              moment(1565445319797).format("YYYY-MM-DD HH:mm:ss");
+            </li>
+            <li id="stampF3">moment().valueOf(); //milliseconds</li>
+            <li id="stampF4">moment().unix(); //seconds</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>UTC</h3>
+          <ul>
+            <li id="utc">moment.utc();</li>
+            <li id="utcF">moment.utc().format();</li>
+            <li id="utcF2">moment.utc("2019-08-10T17:32:22Z");</li>
+            <li id="utcF3">moment.utc("2019-08-10T17:32:22Z").format();</li>
+            <li id="utcF4">
+              moment.utc("2019-08-10T17:32:22Z").format("YYYY MMMM Do");
+            </li>
+            <li id="utcF5">moment.utc(1565445319797);</li>
+            <li id="utcF6">moment.utc(1565445319797).format();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Time from now</h3>
+          <ul>
+            <li id="fromNow">moment([1990,0,1]).fromNow();</li>
+            <li id="fromNowF">moment([1990, 0, 1]).fromNow(true);</li>
+            <li id="fromNowF2">moment("20120620", "YYYYMMDD").fromNow();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Time from X</h3>
+          <ul>
+            <li id="fromX">
+              <p>var a = moment([2007,0,28]);</p>
+              <p>var b = moment([2007,0,29]);</p>
+              <p>a.from(b);</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Time to now</h3>
+          <ul>
+            <li id="toNow">moment([1990, 0, 1]).toNow();</li>
+            <li id="toNowF">moment([1990, 0, 1]).toNow(true);</li>
+            <li id="toNowF2">moment("20120620", "YYYYMMDD").toNow();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Time to X</h3>
+          <ul>
+            <li id="toX">
+              <p>var a = moment([2007,0,28]);</p>
+              <p>var b = moment([2007,0,29]);</p>
+              <p>a.to(b);</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Calendar Time</h3>
+          <ul>
+            <li id="calTime1">moment().calendar();</li>
+            <li id="calTime2">moment([2019,0,1]).calendar();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Difference</h3>
+          <ul>
+            <li id="diffT1">
+              <p>var a = moment([2007,0,28]);</p>
+              <p>var b = moment([2007,0,27]);</p>
+              <p>a.diff(b);</p>
+            </li>
+            <li id="diffT2">
+              <p>var a = moment([2007,0,28]);</p>
+              <p>var b = moment([2007,0,27]);</p>
+              <p>a.diff(b,"days");</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Days in Month</h3>
+          <ul>
+            <li id="dim1">moment().daysInMonth();</li>
+            <li id="dim2">moment("2012-02", "YYYY-MM").daysInMonth();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>As JavaScript Date</h3>
+          <ul>
+            <li id="toJS1">moment().toDate();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>As Array</h3>
+          <ul>
+            <li id="toArr1">moment().toArray();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>As JSON</h3>
+          <ul>
+            <li id="toJSON1">moment().toJSON();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>As String</h3>
+          <ul>
+            <li id="toStr1">moment().toString();</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Is Before</h3>
+          <ul>
+            <li id="isBefore1">moment().isBefore('2010-10-21');</li>
+            <li id="isBefore2">moment('2010-10-20').isBefore('2010-10-21');</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Is After</h3>
+          <ul>
+            <li id="isAfter1">moment().isAfter('2010-10-21');</li>
+            <li id="isAfter2">moment('2010-10-20').isAfter('2010-10-21');</li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <h3>Is Between</h3>
+          <ul>
+            <li id="isBetween1">
+              moment('2010-10-20').isBetween('2010-10-19', '2010-10-25');
+            </li>
+            <li id="isBetween2">
+              moment('2010-10-20').isBetween('2010-10-19', undefined);
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.js"></script>
+    <script>
+      // 當 Enter 鍵 keyup 的時候，能取值並執行：
+      function getValue(event) {
+        if (event.keyCode == 13) {
+          var input = document.getElementById('input').value;
+          document.getElementById('tryText').innerHTML = input;
+        }
+      }
+
+      // ===============
+      // 當下的時間
+      var now = moment();
+      document.getElementById('now').after(now);
+
+      // 使用 format 改變格式
+      var nowF = moment().format();
+      document.getElementById('nowF').after(nowF);
+
+      var nowF1 = moment().format('YYYY/MM/DD HH:mm:ss dddd');
+      document.getElementById('nowF1').after(nowF1);
+
+      var nowF2 = moment().format('MMMM Do YYYY, h:mm:ss a');
+      document.getElementById('nowF2').after(nowF2);
+
+      var nowF3 = moment().format('[今天是] YYYY [年中的第] DDD [天]');
+      document.getElementById('nowF3').after(nowF3);
+
+      // ===============
+      // 自訂特定時間
+      var str = moment('12/25/1995', 'MM-DD-YYYY');
+      document.getElementById('str').after(str);
+
+      var strF = moment('12/25/1995', 'MM-DD-YYYY').format();
+      document.getElementById('strF').after(strF);
+
+      var strF2 = moment('12/25/1995', 'MM-DD-YYYY').format('YY Mo DD ddd');
+      document.getElementById('strF2').after(strF2);
+
+      // ===============
+      // Unix Timestamp
+      var stamp = moment(1565445319797);
+      document.getElementById('stamp').after(stamp);
+
+      var stampF = moment(1565445319797).format();
+      document.getElementById('stampF').after(stampF);
+
+      var stampF2 = moment(1565445319797).format('YYYY-MM-DD HH:mm:ss');
+      document.getElementById('stampF2').after(stampF2);
+
+      var stampF3 = moment().valueOf();
+      document.getElementById('stampF3').after(stampF3);
+
+      var stampF4 = moment().unix();
+      document.getElementById('stampF4').after(stampF4);
+
+      // ===============
+      // UTC 標準時間
+      var utc = moment.utc();
+      document.getElementById('utc').after(utc);
+
+      var utcF = moment.utc().format();
+      document.getElementById('utcF').after(utcF);
+
+      var utcF2 = moment.utc('2019-08-10T17:32:22Z');
+      document.getElementById('utcF2').after(utcF2);
+
+      var utcF3 = moment.utc('2019-08-10T17:32:22Z').format();
+      document.getElementById('utcF3').after(utcF3);
+
+      var utcF4 = moment.utc('2019-08-10T17:32:22Z').format('YYYY MMMM Do');
+      document.getElementById('utcF4').after(utcF4);
+
+      var utcF5 = moment.utc(1565445319797);
+      document.getElementById('utcF5').after(utcF5);
+
+      var utcF6 = moment.utc(1565445319797).format();
+      document.getElementById('utcF6').after(utcF6);
+
+      // ===============
+      // fromNow
+      var fromNow = moment([1990, 0, 1]).fromNow();
+      document.getElementById('fromNow').after(fromNow);
+
+      var fromNowF = moment([1990, 0, 1]).fromNow(true);
+      document.getElementById('fromNowF').after(fromNowF);
+
+      var fromNowF2 = moment('20120620', 'YYYYMMDD').fromNow();
+      document.getElementById('fromNowF2').after(fromNowF2);
+
+      // ===============
+      // fromX
+      var a = moment([2007, 0, 28]);
+      var b = moment([2007, 0, 29]);
+      document.getElementById('fromX').after(a.from(b));
+
+      // ===============
+      // toNow
+      var toNow = moment([1990, 0, 1]).toNow();
+      document.getElementById('toNow').after(toNow);
+
+      var toNowF = moment([1990, 0, 1]).toNow(true);
+      document.getElementById('toNowF').after(toNowF);
+
+      var toNowF2 = moment('20120620', 'YYYYMMDD').toNow();
+      document.getElementById('toNowF2').after(toNowF2);
+
+      // ===============
+      // toX
+      var a = moment([2007, 0, 28]);
+      var b = moment([2007, 0, 29]);
+      document.getElementById('toX').after(a.to(b));
+
+      // ===============
+      // calendar time
+      var calTime1 = moment().calendar();
+      document.getElementById('calTime1').after(calTime1);
+
+      var calTime2 = moment([2019, 0, 1]).calendar();
+      document.getElementById('calTime2').after(calTime2);
+
+      // ===============
+      // difference
+      var a = moment([2007, 0, 28]);
+      var b = moment([2007, 0, 27]);
+      document.getElementById('diffT1').after(a.diff(b));
+
+      var a = moment([2007, 0, 28]);
+      var b = moment([2007, 0, 27]);
+      document.getElementById('diffT2').after(a.diff(b, 'days'));
+
+      // ===============
+      // Days in Month
+      var dim1 = moment().daysInMonth();
+      document.getElementById('dim1').after(dim1);
+
+      var dim2 = moment('2012-02', 'YYYY-MM').daysInMonth();
+      document.getElementById('dim2').after(dim2);
+
+      // ===============
+      // As Javascript Date
+      var toJS1 = moment().toDate();
+      document.getElementById('toJS1').after(toJS1);
+
+      // ===============
+      // As Array
+      var toArr1 = moment().toArray();
+      document.getElementById('toArr1').after(toArr1);
+
+      // ===============
+      // As JSON
+      var toJSON1 = moment().toJSON();
+      document.getElementById('toJSON1').after(toJSON1);
+
+      // ===============
+      // As String
+      var toStr1 = moment().toString();
+      document.getElementById('toStr1').after(toStr1);
+
+      // ===============
+      // Is Before
+      var isBefore1 = moment().isBefore('2010-10-21');
+      document.getElementById('isBefore1').after(isBefore1);
+
+      var isBefore2 = moment('2010-10-20').isBefore('2010-10-21');
+      document.getElementById('isBefore2').after(isBefore2);
+
+      // ===============
+      // Is After
+      var isAfter1 = moment().isAfter('2010-10-21');
+      document.getElementById('isAfter1').after(isAfter1);
+
+      var isAfter2 = moment('2010-10-20').isAfter('2010-10-21');
+      document.getElementById('isAfter2').after(isAfter2);
+
+      // ===============
+      // Is Between
+      var isBetween1 = moment('2010-10-20').isBetween(
+        '2010-10-19',
+        '2010-10-25'
+      );
+      document.getElementById('isBetween1').after(isBetween1);
+
+      var isBetween2 = moment('2010-10-20').isBetween('2010-10-19', undefined);
+      document
+        .getElementById('isBetween2')
+        .after(
+          isBetween2 + '  , //since moment(undefined) evaluates as moment()'
+        );
+    </script>
+  </body>
+</html>
